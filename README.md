@@ -1,7 +1,7 @@
 # ros2
 # Cilium + k3s Multicasting
 
-##### step1. Install k3s
+# step1. Install k3s
 
 curl -sfL https://get.k3s.io | sh -s - \
   --flannel-backend=none \
@@ -12,7 +12,7 @@ curl -sfL https://get.k3s.io | sh -s - \
   --cluster-init
 
 
-#### step2. K3s Config
+# step2. K3s Config
 
 sudo chmod 600 /etc/rancher/k3s/k3s.yaml
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $HOME/.bashrc
@@ -27,7 +27,7 @@ echo "export KUBECONFIG=$HOME/.kube/config" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 
-#### step3. Install Cilium
+# step3. Install Cilium
 
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
@@ -52,7 +52,7 @@ KERNEL-VERSION       CONTAINER-RUNTIME
 5.15.0-113-generic   containerd://1.7.23-k3s2
 
 
-#### step4. Add worker node into cluster
+# step4. Add worker node into cluster
 
 K3S_TOKEN=<TOKEN>
 API_SERVER_IP=<IP>  # master node IP 193.196.39.140
@@ -65,9 +65,9 @@ curl -sfL https://get.k3s.io | sh -s - agent \
 ubuntu@k3s-lat-test-master:~/k3s$ sudo cat /var/lib/rancher/k3s/server/token
 
 
-#### step5. Create ip-pool.yaml
+# step5. Create ip-pool.yaml
 
-# ip-pool.yaml
+#ip-pool.yaml
 apiVersion: "cilium.io/v2alpha1"
 kind: CiliumLoadBalancerIPPool
 metadata:
@@ -84,9 +84,9 @@ NAME         DISABLED   CONFLICTING   IPS AVAILABLE   AGE
 first-pool   false      False         21              7s
 
 
-#### step6. Create values.yaml and announce.yaml
+# step6. Create values.yaml and announce.yaml
 
-# announce.yaml
+#announce.yaml
 apiVersion: cilium.io/v2alpha1
 kind: CiliumL2AnnouncementPolicy
 metadata:
@@ -99,7 +99,7 @@ spec:
 kubectl apply -f announce.yaml
 
 
-# values.yaml
+#values.yaml
 k8sServiceHost: "193.196.39.140"
 k8sServicePort: "6443"
 
@@ -135,7 +135,7 @@ ingressController:
 
 
 
-#### step7. Check 
+# step7. Check 
 
 ubuntu@k3s-lat-test-master:~/k3s$ kubectl get services --all-namespaces
 kube-system   cilium-ingress   LoadBalancer   10.43.70.124    192.196.39.151   80:32424/TCP,443:31854/TCP   26s
@@ -182,7 +182,7 @@ X-Forwarded-Proto: http
 X-Request-Id: 51bbe789-f295-4c18-9b18-f9f62da6c300
 
 
-#### step8. Install cilium dbg
+# step8. Install cilium dbg
 
 sudo apt update && sudo apt install -y \
   clang-15 llvm-15 gcc-multilib \
@@ -190,7 +190,7 @@ sudo apt update && sudo apt install -y \
   jq git bpfcc-tools libbpf-dev \
   python3 python3-pip
 
-# install go 
+#install go 
 wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz
@@ -208,18 +208,18 @@ sudo chmod +x /usr/local/bin/cilium-dbg
 
 
 
-#### step9. Add multicast group
+# step9. Add multicast group
 
 Follow
 https://docs.cilium.io/en/latest/network/multicast/#enable-multicast
 
 
-#### step10. Apply ros2-cilium.yaml
+# step10. Apply ros2-cilium.yaml
 
 ubuntu@k3s-lat-test-master:~/k3s$ kubectl apply -f ros2-cilium.yaml
 
 
-#### step11. Adding Config Map (optional)
+# step11. Adding Config Map (optional)
 If there is something wrong with the communicaton, use config map.
 
 
