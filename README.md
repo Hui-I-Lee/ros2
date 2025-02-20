@@ -58,7 +58,7 @@ $ cilium install \
   --set kubeProxyReplacement=true
 
 
-#How to get API_SERVER_IP
+#How to get API_SERVER_IP  
 $ kubectl get nodes -o wide  
 
 NAME                  STATUS     ROLES                       AGE   VERSION        INTERNAL-IP      EXTERNAL-IP   OS-IMAGE  
@@ -85,7 +85,7 @@ $ curl -sfL https://get.k3s.io | sh -s - agent \
   --server "https://${API_SERVER_IP}:${API_SERVER_PORT}"  
   
 
-#how to get token
+#how to get token  
 $ sudo cat /var/lib/rancher/k3s/server/token
 
 
@@ -132,10 +132,10 @@ kube-system   cilium-ingress   LoadBalancer   10.43.70.124    192.196.39.151   8
 
 $ kubectl apply -f https://blog.stonegarden.dev/articles/2024/02/bootstrapping-k3s-with-cilium/resources/smoke-test.yaml
 
-namespace/whoami created
-deployment.apps/whoami created
-service/whoami created
-ingress.networking.k8s.io/whoami created
+namespace/whoami created  
+deployment.apps/whoami created  
+service/whoami created  
+ingress.networking.k8s.io/whoami created  
 
 
 $ kubectl get service -n whoami
@@ -146,15 +146,15 @@ whoami   LoadBalancer   10.43.173.106   192.196.39.152   80:30169/TCP   8s
 
 $ curl 192.196.39.152
 
-Hostname: whoami-b69cc7dbb-85z4z
-IP: 127.0.0.1
-IP: ::1
-IP: 10.0.0.64
-IP: fe80::e444:bff:fe59:461b
-RemoteAddr: 10.0.0.56:45630
-GET / HTTP/1.1
-Host: 192.196.39.152
-User-Agent: curl/7.81.0
+Hostname: whoami-b69cc7dbb-85z4z  
+IP: 127.0.0.1  
+IP: ::1  
+IP: 10.0.0.64  
+IP: fe80::e444:bff:fe59:461b  
+RemoteAddr: 10.0.0.56:45630  
+GET / HTTP/1.1  
+Host: 192.196.39.152  
+User-Agent: curl/7.81.0  
 Accept: */*
 
 
@@ -227,7 +227,7 @@ $ kubectl apply -f ros2-cilium.yaml
 
 
 # step11. Adding Config Map (optional)
-If there is something wrong with the communicaton, use config map.
+
 
 
 
