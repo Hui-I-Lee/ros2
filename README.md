@@ -45,7 +45,8 @@ $ cilium install \
   --set k8sServicePort=${API_SERVER_PORT} \
   --set kubeProxyReplacement=true
 
-// How to get API_SERVER_IP
+
+#How to get API_SERVER_IP
 $ kubectl get nodes -o wide
 NAME                  STATUS     ROLES                       AGE   VERSION        INTERNAL-IP      EXTERNAL-IP   OS-IMAGE             
 k3s-lat-test-master   NotReady   control-plane,etcd,master   13m   v1.31.5+k3s1   193.196.39.140   <none>        Ubuntu 22.04.4 LTS
@@ -64,7 +65,7 @@ $ curl -sfL https://get.k3s.io | sh -s - agent \
   --token "${K3S_TOKEN}" \
   --server "https://${API_SERVER_IP}:${API_SERVER_PORT}"
 
-// how to get token
+#how to get token
 $ sudo cat /var/lib/rancher/k3s/server/token
 
 
@@ -104,19 +105,23 @@ $ cilium upgrade -f values.yaml
 # step7. Check 
 
 $ kubectl get services --all-namespaces
+
 kube-system   cilium-ingress   LoadBalancer   10.43.70.124    192.196.39.151   80:32424/TCP,443:31854/TCP   26s
 
 $ kubectl apply -f https://blog.stonegarden.dev/articles/2024/02/bootstrapping-k3s-with-cilium/resources/smoke-test.yaml
+
 namespace/whoami created
 deployment.apps/whoami created
 service/whoami created
 ingress.networking.k8s.io/whoami created
 
 $ kubectl get service -n whoami
+
 NAME     TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
 whoami   LoadBalancer   10.43.173.106   192.196.39.152   80:30169/TCP   8s
 
 $ curl 192.196.39.152
+
 Hostname: whoami-b69cc7dbb-85z4z
 IP: 127.0.0.1
 IP: ::1
@@ -129,10 +134,12 @@ User-Agent: curl/7.81.0
 Accept: */*
 
 $ kubectl get service -n kube-system cilium-ingress 
+
 NAME             TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                      AGE
 cilium-ingress   LoadBalancer   10.43.70.124   192.196.39.151   80:32424/TCP,443:31854/TCP   2m30s
 
 $ curl --header 'Host: whoami.local' 192.196.39.151
+
 Hostname: whoami-b69cc7dbb-85z4z
 IP: 127.0.0.1
 IP: ::1
