@@ -12,6 +12,9 @@ curl -sfL https://get.k3s.io | sh -s - \
   --cluster-init
 
 
+
+
+
 # step2. K3s Config
 
 sudo chmod 600 /etc/rancher/k3s/k3s.yaml
@@ -25,6 +28,9 @@ sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 echo "export KUBECONFIG=$HOME/.kube/config" >> $HOME/.bashrc
 source $HOME/.bashrc
+
+
+
 
 
 # step3. Install Cilium
@@ -52,6 +58,9 @@ KERNEL-VERSION       CONTAINER-RUNTIME
 5.15.0-113-generic   containerd://1.7.23-k3s2
 
 
+
+
+
 # step4. Add worker node into cluster
 
 K3S_TOKEN=<TOKEN>
@@ -63,6 +72,9 @@ curl -sfL https://get.k3s.io | sh -s - agent \
 
 // how to get token
 ubuntu@k3s-lat-test-master:~/k3s$ sudo cat /var/lib/rancher/k3s/server/token
+
+
+
 
 
 # step5. Create ip-pool.yaml
@@ -82,6 +94,9 @@ ciliumloadbalancerippool.cilium.io/first-pool created
 ubuntu@k3s-lat-test-master:~/k3s$ kubectl get ippools
 NAME         DISABLED   CONFLICTING   IPS AVAILABLE   AGE
 first-pool   false      False         21              7s
+
+
+
 
 
 # step6. Create values.yaml and announce.yaml
@@ -135,6 +150,8 @@ ingressController:
 
 
 
+
+
 # step7. Check 
 
 ubuntu@k3s-lat-test-master:~/k3s$ kubectl get services --all-namespaces
@@ -182,6 +199,9 @@ X-Forwarded-Proto: http
 X-Request-Id: 51bbe789-f295-4c18-9b18-f9f62da6c300
 
 
+
+
+
 # step8. Install cilium dbg
 
 sudo apt update && sudo apt install -y \
@@ -208,15 +228,23 @@ sudo chmod +x /usr/local/bin/cilium-dbg
 
 
 
+
+
 # step9. Add multicast group
 
 Follow
 https://docs.cilium.io/en/latest/network/multicast/#enable-multicast
 
 
+
+
+
 # step10. Apply ros2-cilium.yaml
 
 ubuntu@k3s-lat-test-master:~/k3s$ kubectl apply -f ros2-cilium.yaml
+
+
+
 
 
 # step11. Adding Config Map (optional)
