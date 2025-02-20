@@ -166,30 +166,26 @@ cilium-ingress   LoadBalancer   10.43.70.124   192.196.39.151   80:32424/TCP,443
 
 $ curl --header 'Host: whoami.local' 192.196.39.151
 
-Hostname: whoami-b69cc7dbb-85z4z
-IP: 127.0.0.1
-IP: ::1
-IP: 10.0.0.64
-IP: fe80::e444:bff:fe59:461b
-RemoteAddr: 10.0.0.112:41005
-GET / HTTP/1.1
-Host: whoami.local
-User-Agent: curl/7.81.0
-Accept: */*
-X-Envoy-Internal: true
-X-Forwarded-For: 193.196.39.140
-X-Forwarded-Proto: http
-X-Request-Id: 51bbe789-f295-4c18-9b18-f9f62da6c300
+Hostname: whoami-b69cc7dbb-85z4z  
+IP: 127.0.0.1  
+IP: ::1  
+IP: 10.0.0.64  
+IP: fe80::e444:bff:fe59:461b  
+RemoteAddr: 10.0.0.112:41005  
+GET / HTTP/1.1  
+Host: whoami.local  
+User-Agent: curl/7.81.0  
+Accept: */*  
+X-Envoy-Internal: true  
+X-Forwarded-For: 193.196.39.140  
+X-Forwarded-Proto: http  
+X-Request-Id: 51bbe789-f295-4c18-9b18-f9f62da6c300  
 
 
 
 # step8. Install cilium dbg
 
-$ sudo apt update && sudo apt install -y \
-  clang-15 llvm-15 gcc-multilib \
-  make libelf-dev iproute2 iptables \
-  jq git bpfcc-tools libbpf-dev \
-  python3 python3-pip
+$ sudo apt update && sudo apt install -y clang-15 llvm-15 gcc-multilib make libelf-dev iproute2 iptables jq git bpfcc-tools libbpf-dev python3 python3-pip  
 
 #install go 
 $ wget https://go.dev/dl/go1.21.5.linux-amd64.tar.gz  
