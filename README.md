@@ -15,17 +15,23 @@ $ curl -sfL https://get.k3s.io | sh -s - \
 
 # step2. K3s Config
 
-$ sudo chmod 600 /etc/rancher/k3s/k3s.yaml
-$ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $HOME/.bashrc
-$ source $HOME/.bashrc
+$ sudo chmod 600 /etc/rancher/k3s/k3s.yaml  
 
-Or 
+$ echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $HOME/.bashrc  
 
-$ mkdir -p $HOME/.kube
-$ sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
-$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
-$ echo "export KUBECONFIG=$HOME/.kube/config" >> $HOME/.bashrc
-$ source $HOME/.bashrc
+$ source $HOME/.bashrc  
+
+Or  
+
+$ mkdir -p $HOME/.kube  
+
+$ sudo cp -i /etc/rancher/k3s/k3s.yaml $HOME/.kube/config  
+
+$ sudo chown $(id -u):$(id -g) $HOME/.kube/config  
+
+$ echo "export KUBECONFIG=$HOME/.kube/config" >> $HOME/.bashrc  
+
+$ source $HOME/.bashrc  
 
 
 
