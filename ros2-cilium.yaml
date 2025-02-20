@@ -1,0 +1,153 @@
+# 創建 Publisher Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: publisher-deployment
+  labels:
+    app: ros2-publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ros2-publisher
+  template:
+    metadata:
+      labels:
+        app: ros2-publisher
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-lat-test-master
+      containers:
+      - name: publisher
+        image: huiilee142/publisher-image:fastdds
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        env:
+        - name: RMW_IMPLEMENTATION
+          value: "rmw_fastrtps_cpp"
+        - name: ROS_DISCOVERY_SERVER
+          value: ""  # 確保 FastDDS 透過 Multicast 進行 Discovery
+        - name: ROS_DOMAIN_ID
+          value: "0"
+            # - name: FASTRTPS_DEFAULT_PROFILES_FILE
+            # value: "/root/ros2_ws/FASTRTPS_DEFAULT_PROFILES.xml"  # 指定 XML
+        command:
+          - /bin/bash
+          - -c
+          - |
+            source /opt/ros/humble/setup.bash && \
+            cd /root/ros2_ws && \
+            source install/setup.bash && \
+            ros2 run py_pubsub talker
+        ports:
+        - containerPort: 7400
+          protocol: UDP
+        - containerPort: 7410
+          protocol: UDP
+            #volumeMounts:
+            #- name: fastdds-config
+            #mountPath: "/root/ros2_ws/FASTRTPS_DEFAULT_PROFILES.xml"
+            #subPath: FASTRTPS_DEFAULT_PROFILES.xml
+            # volumes:
+            # - name: fastdds-config
+            #hostPath:
+            # path: "/mnt/k3s/" #FASTRTPS_DEFAULT_PROFILES.xml"  #  掛載 XML 設定
+            #type: Directory #File
+
+---
+# 創建 Subscriber Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-deployment
+  labels:
+    app: ros2-subscriber
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ros2-subscriber
+  template:
+    metadata:
+      labels:
+        app: ros2-subscriber
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-lat-test-worker-1
+      containers:
+      - name: subscriber
+        image: huiilee142/subscriber-image:fastdds
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        env:
+        - name: RMW_IMPLEMENTATION
+          value: "rmw_fastrtps_cpp"   # 使用 FastDDS 傳輸層
+        - name: ROS_DISCOVERY_SERVER
+          value: ""  # 確保 FastDDS 透過 Multicast 進行 Discovery
+        - name: ROS_DOMAIN_ID
+          value: "0"   # 確保 ROS 2 節點在相同 Domain ID 下能夠溝通
+        command:
+          - /bin/bash
+          - -c
+          - |
+            source /opt/ros/humble/setup.bash && \
+            cd /root/ros2_ws && \
+            source install/setup.bash && \
+            ros2 run py_pubsub listener
+        ports:
+        - containerPort: 7400  # FastDDS Discovery（發現其他 ROS 2 節點）
+          protocol: UDP
+        - containerPort: 7410   # FastDDS 資料傳輸
+          protocol: UDP
+            #        volumeMounts:
+            #- name: fastdds-config
+            # mountPath: "/root/ros2_ws/FASTRTPS_DEFAULT_PROFILES.xml"
+            #subPath: FASTRTPS_DEFAULT_PROFILES.xml
+            #volumes:
+            #- name: fastdds-config
+            #hostPath:
+            # path: "/mnt/k3s/" #FASTRTPS_DEFAULT_PROFILES.xml"  # 掛載 XML 設定
+            #type: Directory #File
+
+---
+# 創建 LoadBalancer Service 讓 Subscriber 可以找到 Publisher
+apiVersion: v1
+kind: Service
+metadata:
+  name: publisher-service
+spec:
+  type: LoadBalancer  # 讓 Cilium 透過 L2 Announcement 分配 External IP
+  selector:
+    app: ros2-publisher
+  ports:
+    - name: fastdds-discovery
+      port: 7400
+      targetPort: 7400
+      protocol: UDP
+    - name: fastdds-communication
+      port: 7410
+      targetPort: 7410
+      protocol: UDP
+
+---
+# 創建 LoadBalancer Service 讓 Publisher 也可以找到 Subscriber
+apiVersion: v1
+kind: Service
+metadata:
+  name: subscriber-service
+spec:
+  type: LoadBalancer  #  讓 Cilium 透過 L2 Announcement 分配 External IP
+  selector:
+    app: ros2-subscriber
+  ports:
+    - name: fastdds-discovery
+      port: 7400
+      targetPort: 7400
+      protocol: UDP
+    - name: fastdds-communication
+      port: 7410
+      targetPort: 7410
+      protocol: UDP
+
