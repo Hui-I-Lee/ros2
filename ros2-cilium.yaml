@@ -56,7 +56,7 @@ spec:
             #type: Directory #File
 
 ---
-# 創建 Subscriber Deployment
+# 創建 Subscriber Deployment 1
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -110,6 +110,54 @@ spec:
             #hostPath:
             # path: "/mnt/k3s/" #FASTRTPS_DEFAULT_PROFILES.xml"  # 掛載 XML 設定
             #type: Directory #File
+
+---
+# 創建 Subscriber Deployment 2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subscriber-deployment-2
+  labels:
+    app: ros2-subscriber  # 用相同的 label，這樣 Service 會自動管理它
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ros2-subscriber
+  template:
+    metadata:
+      labels:
+        app: ros2-subscriber
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-lat-worker-2
+      containers:
+      - name: subscriber
+        image: huiilee142/subscriber-image:fastdds
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        env:
+        - name: RMW_IMPLEMENTATION
+          value: "rmw_fastrtps_cpp"
+        - name: ROS_DISCOVERY_SERVER
+          value: ""
+        - name: ROS_DOMAIN_ID
+          value: "0"
+        command:
+          - /bin/bash
+          - -c
+          - |
+            source /opt/ros/humble/setup.bash && \
+            cd /root/ros2_ws && \
+            source install/setup.bash && \
+            ros2 run py_pubsub listener
+        ports:
+        - containerPort: 7400
+          protocol: UDP
+        - containerPort: 7410
+          protocol: UDP
+
 
 ---
 # 創建 LoadBalancer Service 讓 Subscriber 可以找到 Publisher
