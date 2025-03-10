@@ -55,7 +55,14 @@ $ API_SERVER_PORT=<PORT>  # 6443 default
 $ cilium install \
   --set k8sServiceHost=${API_SERVER_IP} \
   --set k8sServicePort=${API_SERVER_PORT} \
-  --set kubeProxyReplacement=true
+  --set kubeProxyReplacement=true \
+  --set prometheus.enabled=true \
+  --set operator.prometheus.enabled=true \
+  --set hubble.enabled=true  
+  
+(optional) only for metrics
+kubectl apply -f cilium-prometheus-service.yaml  
+kubectl applt -f cilium-servicemonitor.yaml
 
 
 #How to get API_SERVER_IP  
