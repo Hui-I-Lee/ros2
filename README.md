@@ -60,7 +60,7 @@ $ cilium install \
   --set operator.prometheus.enabled=true \
   --set hubble.enabled=true  
   
-(optional) only for metrics
+(optional) only for metrics  
 kubectl apply -f cilium-prometheus-service.yaml  
 kubectl applt -f cilium-servicemonitor.yaml
 
