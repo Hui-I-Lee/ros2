@@ -78,6 +78,7 @@ KERNEL-VERSION       CONTAINER-RUNTIME
 
 
 
+
 $ HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)  
 
 $ HUBBLE_ARCH=amd64  
