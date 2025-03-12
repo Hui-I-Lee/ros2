@@ -68,18 +68,11 @@ kubectl applt -f cilium-servicemonitor.yaml
 #How to get API_SERVER_IP  
 $ kubectl get nodes -o wide  
 
-NAME                  STATUS     ROLES                       AGE   VERSION        INTERNAL-IP      EXTERNAL-IP   OS-IMAGE  
+NAME   STATUS     ROLES     AGE   VERSION       INTERNAL-IP      EXTERNAL-IP   OS-IMAGE  KERNEL-VERSION   CONTAINER-RUNTIME    
 
-k3s-lat-test-master   NotReady   control-plane,etcd,master   13m   v1.31.5+k3s1   193.196.39.140   <none>        Ubuntu 22.04.4 LTS
+                                               193.196.39.140  
 
-KERNEL-VERSION       CONTAINER-RUNTIME  
-
-5.15.0-113-generic   containerd://1.7.23-k3s2  
-
-
-
-
-$ HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)  
+  $ HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)  
 
 $ HUBBLE_ARCH=amd64  
 
