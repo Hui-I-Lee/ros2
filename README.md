@@ -87,7 +87,9 @@ $ sudo tar xzvfC hubble-linux-${HUBBLE_ARCH}.tar.gz /usr/local/bin
 $ rm hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
 #hubble observe
 
-cilium hubble port-forward&
+cilium hubble port-forward&。
+cilium hubble enable  
+
 
 # step4. Add worker node into cluster
 
