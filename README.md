@@ -195,6 +195,13 @@ https://docs.cilium.io/en/latest/network/multicast/#enable-multicast
 # step10. Apply ros2-cilium.yaml
 ```bash
 kubectl apply -f ros2-cilium.yaml
+kubectl get pods
+# [INFO] [1756535169.365128813] [minimal_publisher]: Publishing: Center(1.0, 2.0, 3.0), Radius: 5.0, Label: This is a custom message!
+# [INFO] [1756535169.365739234] [minimal_publisher]: Timestamp: 1756535246.364418983
+
+kubectl logs <pod-name> --tail=5
+# [INFO] [1756535246.367608455] [minimal_subscriber]: Timestamp: 1756535246.364418983, Latency: 0.0013 seconds
+# [INFO] [1756535247.366430636] [minimal_subscriber]: Received: Center(1.0, 2.0, 3.0), Radius: 5.0, Label: This is a custom message!
 ```
 
 # step11. Adding Config Map (optional)
