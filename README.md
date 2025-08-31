@@ -204,7 +204,10 @@ kubectl logs <pod-name> --tail=5
 # [INFO] [1756535247.366430636] [minimal_subscriber]: Received: Center(1.0, 2.0, 3.0), Radius: 5.0, Label: This is a custom message!
 ```
 
-# step11. Adding Config Map (optional)
+# step11. start to create data
+```bash
+hubble observe --protocol UDP
+sudo cilium-dbg monitor
 
 
 
