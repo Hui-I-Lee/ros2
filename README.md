@@ -1,7 +1,6 @@
-# ros2
 # Cilium + k3s Multicasting
 
-# step1. Install k3s
+## step1. Install k3s
 ```bash
  curl -sfL https://get.k3s.io | sh -s - \
   --flannel-backend=none \
@@ -13,7 +12,7 @@
 ```
 
 
-# step2. K3s Config
+## step2. K3s Config
 ```bash
 sudo chmod 600 /etc/rancher/k3s/k3s.yaml  
 echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $HOME/.bashrc  
@@ -29,7 +28,7 @@ source $HOME/.bashrc
 ```
 
 
-# step3. Install Cilium and hubble
+## step3. Install Cilium and hubble
 ```bash
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)  
 CLI_ARCH=amd64  
@@ -39,7 +38,10 @@ rm cilium-linux-${CLI_ARCH}.tar.gz
 ```
 
 ```bash
-API_SERVER_IP=<IP>  # 193.196.39.140  
+API_SERVER_IP=<IP>  # 193.196.39.140
+# kubectl get nodes -o wide
+# INTERNAL-IP : 193.196.39.140
+
 API_SERVER_PORT=<PORT>  # 6443 default  
 cilium install \
   --set k8sServiceHost=${API_SERVER_IP} \
@@ -50,19 +52,11 @@ cilium install \
   --set hubble.enabled=true  
 ```
   
-(optional) only for metrics  
 ```bash
+# (optional) only for metrics  
 kubectl apply -f cilium-prometheus-service.yaml  
 kubectl applt -f cilium-servicemonitor.yaml
 ```
-
-#How to get API_SERVER_IP  
-```bash
-kubectl get nodes -o wide  
-```
-NAME   STATUS     ROLES     AGE   VERSION       INTERNAL-IP      EXTERNAL-IP   OS-IMAGE  KERNEL-VERSION   CONTAINER-RUNTIME    
-
-                                               193.196.39.140  
 
 ```bash
 HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)  
@@ -72,13 +66,19 @@ curl -L --fail --remote-name-all https://github.com/cilium/hubble/releases/downl
 sudo tar xzvfC hubble-linux-${HUBBLE_ARCH}.tar.gz /usr/local/bin  
 rm hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
 ```
-#hubble observe
+
+### start hubble observe
 ```bash
 cilium hubble port-forward&
 cilium hubble enable  
 ```
 
 # step4. Add worker node into cluster
+```bash
+# get token on master node 
+sudo cat /var/lib/rancher/k3s/server/token
+```
+
 ```bash
 # do these steps on worker node
 K3S_TOKEN=<TOKEN>  #master node token
@@ -89,36 +89,21 @@ curl -sfL https://get.k3s.io | sh -s - agent \
   --server "https://${API_SERVER_IP}:${API_SERVER_PORT}"  
 ```  
 
-#how to get token 
-```bash
-sudo cat /var/lib/rancher/k3s/server/token
-```
+# step5. Create service
 
-
-
-# step5. Create ip-pool.yaml
-
-ip-pool.yaml
- ...
- ...
 ```bash
 kubectl apply -f ip-pool.yaml
 #ciliumloadbalancerippool.cilium.io/first-pool created
 
 kubectl get ippools  
-
 # NAME         DISABLED   CONFLICTING   IPS AVAILABLE   AGE
 # first-pool   false      False         21              7s
-```
 
-
-# step6. Create values.yaml and announce.yaml
-```bash
 kubectl apply -f announce.yaml
 cilium upgrade -f values.yaml
 ```
 
-# step7. Check 
+# step6. Check 
 ```bash
 kubectl get services --all-namespaces
 #kube-system   cilium-ingress   LoadBalancer   10.43.70.124    192.196.39.151   80:32424/TCP,443:31854/TCP   26s
@@ -167,7 +152,7 @@ curl --header 'Host: whoami.local' 192.196.39.151
 ```
 
 
-# step8. Install cilium dbg
+# step7. Install cilium dbg
 ```bash
 sudo apt update && sudo apt install -y clang-15 llvm-15 gcc-multilib make libelf-dev iproute2 iptables jq git bpfcc-tools libbpf-dev python3 python3-pip  
 
@@ -186,13 +171,13 @@ sudo cp cilium-dbg/cilium-dbg /usr/local/bin/cilium-dbg
 sudo chmod +x /usr/local/bin/cilium-dbg  
 ```
 
-# step9. Add multicast group
+# step8. Add multicast group
 
 Follow：
 https://docs.cilium.io/en/latest/network/multicast/#enable-multicast
 
 
-# step10. Apply ros2-cilium.yaml
+# step9. Apply ros2-cilium.yaml
 ```bash
 kubectl apply -f ros2-cilium.yaml
 kubectl get pods
@@ -204,11 +189,11 @@ kubectl logs <pod-name> --tail=5
 # [INFO] [1756535247.366430636] [minimal_subscriber]: Received: Center(1.0, 2.0, 3.0), Radius: 5.0, Label: This is a custom message!
 ```
 
-# step11. start to create data
+# step11. data analysis
 ```bash
 hubble observe --protocol UDP
 sudo cilium-dbg monitor
-
+```
 
 
 
