@@ -1,0 +1,265 @@
+Cilium + Multicasting
+
+
+P.S. to-overlay: source node to target node
+     to-endpoint> target node to pod
+
+Different node , different pod , load balancer, multicasting
+
+Aug 30 06:37:37.526: default/subscriber-deployment-9f65cb59d-bq2xs:55452 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:37.527: default/subscriber-deployment-9f65cb59d-bq2xs:55452 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:38.858: default/publisher-deployment-6c6cc966c5-9jhl8:45163 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:38.858: default/publisher-deployment-6c6cc966c5-9jhl8:45163 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:38.859: default/publisher-deployment-6c6cc966c5-9jhl8:45163 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:40.526: default/subscriber-deployment-9f65cb59d-bq2xs:55452 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 30 06:37:40.527: default/subscriber-deployment-9f65cb59d-bq2xs:55452 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+
+
+Aug 30 06:37:41.636: 193.196.39.140:44171 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Aug 30 06:37:41.638: 193.196.39.140:53542 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Aug 30 06:37:37.527: 10.0.0.87:41513 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 30 06:37:38.858: 10.0.2.249:56178 (world) <> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)t
+Aug 30 06:37:38.858: 10.0.2.249:56178 (host) -> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 30 06:37:39.364: default/publisher-deployment-6c6cc966c5-9jhl8:46902 (ID:52094) -> default/subscriber-deployment-9f65cb59d-bq2xs:7411 (ID:57532) to-overlay FORWARDED (UDP)
+Aug 30 06:37:40.365: default/publisher-deployment-6c6cc966c5-9jhl8:46902 (ID:52094) -> default/subscriber-deployment-9f65cb59d-bq2xs:7411 (ID:57532) to-endpoint FORWARDED (UDP)
+Aug 30 06:37:40.392: default/subscriber-deployment-9f65cb59d-bq2xs:56787 (ID:57532) -> default/publisher-deployment-6c6cc966c5-9jhl8:7411 (ID:52094) to-endpoint FORWARDED (UDP)
+Aug 30 06:37:40.392: default/subscriber-deployment-9f65cb59d-bq2xs:56787 (ID:57532) -> default/publisher-deployment-6c6cc966c5-9jhl8:7411 (ID:52094) to-overlay FORWARDED (UDP)
+Aug 30 06:37:40.526: default/subscriber-deployment-9f65cb59d-bq2xs:56787 (ID:57532) -> default/publisher-deployment-6c6cc966c5-9jhl8:7410 (ID:52094) to-endpoint FORWARDED (UDP)
+Aug 30 06:37:40.526: default/subscriber-deployment-9f65cb59d-bq2xs:56787 (ID:57532) -> default/publisher-deployment-6c6cc966c5-9jhl8:7410 (ID:52094) to-overlay FORWARDED (UDP)
+Aug 30 06:37:40.527: 10.0.0.87:41513 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 30 06:37:40.527: 10.0.0.87:41513 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Different node , different pod , no load balancer, multicasting
+
+
+Aug 31 01:14:20.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:20.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:20.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:21.133: default/subscriber-deployment-9f65cb59d-jhzq8:54110 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:21.134: default/subscriber-deployment-9f65cb59d-jhzq8:54110 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:23.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:23.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:23.950: default/publisher-deployment-6c6cc966c5-wxxk4:47772 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:24.133: default/subscriber-deployment-9f65cb59d-jhzq8:54110 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:14:24.134: default/subscriber-deployment-9f65cb59d-jhzq8:54110 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+
+
+
+Aug 31 01:14:20.950: 10.0.2.249:34719 (world) <> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:20.950: 10.0.2.249:34719 (host) -> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:21.133: default/subscriber-deployment-9f65cb59d-jhzq8:34110 (ID:57532) -> default/publisher-deployment-6c6cc966c5-wxxk4:7410 (ID:52094) to-overlay FORWARDED (UDP)
+Aug 31 01:14:21.133: 10.0.0.87:40559 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:21.133: 10.0.0.87:40559 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:21.134: default/subscriber-deployment-9f65cb59d-jhzq8:34110 (ID:57532) -> default/publisher-deployment-6c6cc966c5-wxxk4:7410 (ID:52094) to-endpoint FORWARDED (UDP)
+Aug 31 01:14:23.950: 10.0.2.249:34719 (world) <> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:24.133: 10.0.0.87:40559 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:14:24.164: 193.196.39.140:34063 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Aug 31 01:14:24.166: 193.196.39.140:36550 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Same node , different pod , load balancer, multicasting
+
+
+Aug 31 01:37:05.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:05.606: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:08.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:08.606: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:11.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:11.606: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:14.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:14.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:17.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:17.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:20.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:20.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:23.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:23.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:26.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:26.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:29.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:29.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.605: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.606: default/publisher-deployment-6c6cc966c5-xlnxq:50910 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.606: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.606: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.607: default/subscriber-deployment-8649c8c8f6-r7x9v:59639 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+
+
+
+
+Aug 31 01:37:32.606: default/subscriber-deployment-8649c8c8f6-r7x9v:42248 (ID:57532) -> default/publisher-deployment-6c6cc966c5-xlnxq:7410 (ID:52094) to-endpoint FORWARDED (UDP)
+Aug 31 01:37:32.606: 10.0.2.249:54767 (world) <> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:37:32.606: 10.0.2.249:54767 (host) -> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:37:33.138: default/subscriber-deployment-8649c8c8f6-r7x9v:42248 (ID:57532) -> default/publisher-deployment-6c6cc966c5-xlnxq:7411 (ID:52094) to-endpoint FORWARDED (UDP)
+Aug 31 01:37:33.937: 193.196.39.140:52175 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Aug 31 01:37:33.938: 193.196.39.140:44853 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Same node , different pod , no load balancer, multicasting
+
+
+Aug 31 01:32:55.436: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:32:56.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:32:58.436: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:32:59.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:01.436: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:02.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:04.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:05.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:07.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:08.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:10.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:11.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:13.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:14.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:16.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:17.391: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:19.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:20.391: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:22.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:23.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:23.390: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:23.391: default/subscriber-deployment-8649c8c8f6-vrx9d:44461 (ID:57532) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:25.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:33:25.437: default/publisher-deployment-6c6cc966c5-nltjk:36904 (ID:52094) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+
+
+Aug 31 01:33:25.436: 10.0.2.249:38473 (world) <> 10.0.0.87:8472 (remote-node) to-overlay FORWARDED (UDP)
+Aug 31 01:33:26.026: 193.196.39.140:50454 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Aug 31 01:33:26.027: 193.196.39.140:51843 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Different node , different pod , load balancer, no multicasting
+
+
+Sep  2 06:36:38.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:41.377: default/publisher-deployment-6c6cc966c5-sglrn:34475 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:41.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:36:41.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:44.377: default/publisher-deployment-6c6cc966c5-sglrn:34475 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:44.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:36:44.663: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:47.377: default/publisher-deployment-6c6cc966c5-sglrn:34475 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:47.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:36:47.663: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:50.377: default/publisher-deployment-6c6cc966c5-sglrn:34475 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:50.662: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:36:50.663: default/subscriber-deployment-9f65cb59d-ht5gv:49852 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+
+
+
+Sep  2 06:36:41.662: 10.0.0.87:43309 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:44.662: 10.0.0.87:43309 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:44.662: 10.0.0.87:43309 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:47.662: 10.0.0.87:43309 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:50.662: 10.0.0.87:43309 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:50.662: 10.0.0.87:43309 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:36:51.682: 193.196.39.140:43983 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Sep  2 06:36:51.684: 193.196.39.140:46488 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Different node , different pod , no load balancer, no multicasting
+
+
+Sep  2 06:41:01.330: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:41:01.448: default/publisher-deployment-6c6cc966c5-t56mt:43217 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:04.330: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:41:04.331: default/subscriber-deployment-9f65cb59d-98wgk:60379 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:04.448: default/publisher-deployment-6c6cc966c5-t56mt:43217 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:07.330: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:41:07.331: default/subscriber-deployment-9f65cb59d-98wgk:60379 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:07.448: default/publisher-deployment-6c6cc966c5-t56mt:43217 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:10.330: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:41:10.331: default/subscriber-deployment-9f65cb59d-98wgk:60379 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:10.448: default/publisher-deployment-6c6cc966c5-t56mt:43217 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:13.330: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:41:13.331: default/subscriber-deployment-9f65cb59d-98wgk:60379 (world) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:41:13.448: default/publisher-deployment-6c6cc966c5-t56mt:43217 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+
+
+
+Sep  2 06:41:04.330: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:04.330: 10.0.0.87:49537 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:07.330: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:10.330: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:10.330: 10.0.0.87:49537 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:13.330: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:41:15.189: 193.196.39.140:40005 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Sep  2 06:41:15.190: 193.196.39.140:60861 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Same node , different pod , load balancer, no multicasting 
+
+
+Sep  2 06:25:22.879: 127.0.0.1:37425 (world) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:22.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:22.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:24.914: 127.0.0.1:41652 (world) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:24.914: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:24.914: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:25.879: 127.0.0.1:37425 (world) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:25.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:25.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:27.915: 127.0.0.1:41652 (world) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:27.915: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:27.915: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:28.879: 127.0.0.1:37425 (world) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:28.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:28.879: default/subscriber-deployment-8649c8c8f6-x25n2:34681 (ID:4470) <> default/subscriber-deployment-8649c8c8f6-x25n2 (ID:4470) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:30.915: 127.0.0.1:41652 (world) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:30.915: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:25:30.915: default/publisher-deployment-6c6cc966c5-b4rzg:53132 (ID:4415) <> default/publisher-deployment-6c6cc966c5-b4rzg (ID:4415) pre-xlate-rev TRACED (UDP)
+Sep  2 06:25:31.335: 193.196.39.140:44715 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Sep  2 06:25:31.337: 193.196.39.140:55239 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+EVENTS LOST: HUBBLE_RING_BUFFER CPU(0) 1
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Same node , different pod , no load balancer, no multicasting
+
+
+Sep  2 06:44:07.337: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:44:10.338: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:44:13.338: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:44:16.338: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:44:19.338: default/subscriber-deployment-9f65cb59d-98wgk:60379 (ID:4470) <> 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Sep  2 06:46:45.327: default/subscriber-deployment-8649c8c8f6-98b7p:51325 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:46:46.446: default/publisher-deployment-6c6cc966c5-cggbx:34670 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:46:48.327: default/subscriber-deployment-8649c8c8f6-98b7p:51325 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:46:49.447: default/publisher-deployment-6c6cc966c5-cggbx:34670 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:46:51.327: default/subscriber-deployment-8649c8c8f6-98b7p:51325 (ID:4470) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:46:52.447: default/publisher-deployment-6c6cc966c5-cggbx:34670 (ID:4415) <> 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+
+
+
+Sep  2 06:44:10.338: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:44:10.338: 10.0.0.87:49537 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:44:13.338: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:44:16.338: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:44:16.338: 10.0.0.87:49537 (host) -> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:44:19.338: 10.0.0.87:49537 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+Sep  2 06:46:53.659: 193.196.39.140:41030 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+Sep  2 06:46:53.660: 193.196.39.140:40057 (host) -> 141.3.175.65:53 (world) to-network FORWARDED (UDP)
+
+
+
+
