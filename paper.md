@@ -44,30 +44,33 @@ Publisher and subscriber pods communicated using ROS 2 DDS default settings, whi
 
 ## 3. Results
 
-### 3.1 Successful Communication (Scenarios 1–4)
+### 3.1 Summary of Eight Scenarios
+| Scenario | Topology                      | Load Balancer | Multicast Enabled | Log Pattern                                    | Communication Result |
+| -------- | ----------------------------- | ------------- | ----------------- | ---------------------------------------------- | -------------------- |
+| 1        | Different node, different pod | ✅             | ✅                 | `Multicast DROPPED`, `to-endpoint FORWARDED`   | ✅ Success            |
+| 2        | Different node, different pod | ❌             | ✅                 | `Multicast DROPPED`, `to-endpoint FORWARDED`   | ✅ Success            |
+| 3        | Same node, different pod      | ✅             | ✅                 | `Multicast DROPPED`, `to-endpoint FORWARDED`   | ✅ Success            |
+| 4        | Same node, different pod      | ❌             | ✅                 | `Multicast DROPPED`, `to-endpoint FORWARDED`   | ✅ Success            |
+| 5        | Different node, different pod | ✅             | ❌                 | `TTL exceeded DROPPED`, no `to-endpoint`       | ❌ Fail               |
+| 6        | Different node, different pod | ❌             | ❌                 | `TTL exceeded DROPPED`, no `to-endpoint`       | ❌ Fail               |
+| 7        | Same node, different pod      | ✅             | ❌                 | `TTL exceeded DROPPED`, `pre-xlate-rev TRACED` | ❌ Fail               |
+| 8        | Same node, different pod      | ❌             | ❌                 | `TTL exceeded DROPPED`, no `to-endpoint`       | ❌ Fail               |
 
-* Logs showed repeated:
+### 3.2 Representative Log Snippets
+**Scenarios 1–4 (Success with multicast enabled)**
+```text
+Aug 31 01:37:05.605: default/publisher ... 239.255.0.1:7400 (world) Multicast handled DROPPED (UDP)
+Aug 31 01:37:32.606: default/subscriber ... -> default/publisher ... to-endpoint FORWARDED (UDP)
+```
+Interpretation: Discovery multicast is dropped, but unicast traffic is successfully forwarded, enabling communication.  
 
-  ```
-  Multicast handled DROPPED (UDP)
-  ```
-* However, subsequent unicast transmissions were **FORWARDED**:
 
-  ```
-  to-overlay FORWARDED (UDP)
-  to-endpoint FORWARDED (UDP)
-  ```
-* **Interpretation**: Multicast packets were dropped by Cilium, but ROS 2’s unicast discovery fallback established connections. Hence, communication succeeded despite multicast loss.
-
-### 3.2 Failed Communication (Scenarios 5–8)
-
-* Logs contained:
-
-  ```
-  TTL exceeded DROPPED (UDP)
-  ```
-* No successful `to-endpoint FORWARDED` events were observed.
-* **Interpretation**: Packets entered routing loops within Cilium’s BPF datapath, causing TTL expiration. Without multicast discovery or unicast fallback, ROS 2 communication failed completely.
+**Scenarios 5–8 (Failure without multicast)**
+```text
+Sep  2 06:36:38.662: default/subscriber ... 239.255.0.1:7400 (world) TTL exceeded DROPPED (UDP)
+Sep  2 06:36:44.662: 10.0.0.87:43309 (world) <> 10.0.2.249:8472 (remote-node) to-overlay FORWARDED (UDP)
+```
+Interpretation: TTL exceeded indicates packet looping in the datapath; no unicast endpoint forwarding occurs, preventing ROS 2 discovery and data transmission.
 
 ---
 
