@@ -1,4 +1,4 @@
-# Draft Paper
+# The Myth of Multicast: Evaluating Cilium for ROS 2 Discovery
 
 ## Abstract
 
